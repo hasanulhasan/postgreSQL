@@ -1,7 +1,7 @@
 -- Active: 1692287757511@@127.0.0.1@5432@mydata
 ---Student Table Creation
 CREATE TABLE students (
-    student_id INT PRIMARY KEY UNIQUE,
+    student_id SERIAL PRIMARY KEY,
     student_name VARCHAR(150),
     age INT,
     email VARCHAR(100),
@@ -10,11 +10,14 @@ CREATE TABLE students (
     status VARCHAR(100)
 );
 ---inserting some data to student table
-INSERT INTO students (student_id,student_name, age, email, frontend_mark,backend_mark)
+INSERT INTO students (student_name, age, email, frontend_mark,backend_mark)
 VALUES 
-  (2, 'Rakib', 22, 'rakib@gmail.com', 50, 60),
-  (3, 'Sakib', 26, 'sakib@gmail.com', 56, 55),
-  (4, 'Akib', 21, 'akibb@gmail.com', 57, 50)
+  ('Alice', 22, 'alice@example', 55, 57),
+  ('Bob', 21, 'bob@example', 34, 45),
+  ('Charlie', 23, 'charlie@example', 60, 59),
+  ('David', 20, 'david@example', 40, 49),
+  ('Eve', 24, 'newemail@example', 45, 34),
+  ('Rahim', 23, 'rahim@example', 46, 42)
 
 ---Course Table Creation
 CREATE TABLE courses (
@@ -25,9 +28,25 @@ CREATE TABLE courses (
 ---Course table data inserting
 INSERT INTO courses (course_name, credits)
 VALUES 
-  ('Java Learning', 3),
-  ('Python Learning', 2),
-  ('MySQL Learning', 1),
-  ('Next JS Learning', 4);
+  ('Next.js', 3),
+  ('React.js', 4),
+  ('Database', 3),
+  ('Prisma', 3);
 
-
+---Enrollment Table Creation
+CREATE TABLE enrollment (
+    enrollment_id SERIAL PRIMARY KEY,
+    student_id INT, CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(student_id),
+    course_id INT, CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+---Course table data inserting
+INSERT INTO enrollment (student_id, course_id) 
+VALUES 
+  (1, 1),
+  (1, 2),
+  (2, 1),
+  (3, 2);
+--Query-1 (insert a data to student table)
+INSERT INTO students VALUES (7, 'Hasib', 25, 'hasib@gmail.com', 41, 38);
+SELECT * from students;
+--Query-2 (insert a data to student table)
