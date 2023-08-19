@@ -29,7 +29,13 @@ VALUES (
         'alice@example.com',
         55,
         57
-    ), ('Bob', 21, 'bob@example.com', 34, 45), (
+    ), (
+        'Bob',
+        21,
+        'bob@example.com',
+        34,
+        45
+    ), (
         'Charlie',
         23,
         'charlie@example.com',
@@ -101,6 +107,27 @@ VALUES (
 
 --Query-2 (Retrieve the names of all students who are enrolled in the course titled 'Next.js')
 
+SELECT student_name
+from students
+    INNER JOIN enrollment on enrollment.course_id = 1 AND students.student_id = enrollment.student_id;
+
+--Query-3 (Update the status of the student with the highest total (frontend_mark + backend_mark) mark to 'Awarded')
+
+UPDATE students
+set status = 'awarded'
+WHERE frontend_mark+backend_mark = (select max(frontend_mark+backend_mark) from students);
+
+--Query-4 (Delete all courses that have no students enrolled)
+
+SELECT *
+from courses
+    INNER JOIN enrollment on enrollment.course_id = courses.course_id;
+
+--Query-6 (Retrieve the course names and the number of students enrolled in each course)
+
+SELECT * from courses;
+SELECT * from enrollment ;
+
 
 
 --Query-5 (Retrieve the names of students using a limit of 2, starting from the 3rd student)
@@ -117,5 +144,4 @@ SELECT avg(age) from students;
 
 --Query-8 (Retrieve the names of students whose email addresses contain 'example.com')
 
-SELECT student_name from students
-WHERE email LIKE '%example.com';
+SELECT student_name from students WHERE email LIKE '%example.com';
