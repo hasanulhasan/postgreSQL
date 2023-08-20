@@ -118,12 +118,11 @@ set status = 'awarded'
 WHERE frontend_mark+backend_mark = (select max(frontend_mark+backend_mark) from students);
 
 --Query-4 (Delete all courses that have no students enrolled)
-SELECT * from students;
-SELECT * from enrollment ;
-SELECT * from courses c
-INNER JOIN enrollment e on e.course_id = c.course_id;
 
-
+DELETE from courses WHERE course_id NOT IN (
+    SELECT c.course_id from courses c
+    JOIN enrollment e on e.course_id = c.course_id
+);
 
 --Query-5 (Retrieve the names of students using a limit of 2, starting from the 3rd student)
 
@@ -138,7 +137,6 @@ OFFSET 2;
 SELECT c.course_name, count(*) as student_enrolled from enrollment e
 INNER JOIN courses c on e.course_id = c.course_id
 GROUP BY c.course_name;
-
 
 --Query-7 (Calculate and display the average age of all students)
 
